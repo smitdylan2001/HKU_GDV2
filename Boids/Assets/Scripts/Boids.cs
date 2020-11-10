@@ -8,11 +8,11 @@ public class Boids : MonoBehaviour
     [SerializeField] private int _distance = 3;
     [SerializeField] private float _cohesionWeight = 1;
     [SerializeField] private float _seperationnWeight = 1;
-    [SerializeField] private float _alignmentWeight = 1;
+	[SerializeField] private float _alignmentWeight = 1;
+
     private Boid[] _boids;
     private Vector3 v1, v1Sum, v2, v2Sum, v3, v3Sum;
     private GameObject _testObject;
-
 
     void Start()
     {
@@ -25,7 +25,8 @@ public class Boids : MonoBehaviour
         _boids = new Boid[_boidAmount];
         for (int i = 0; i < amount; i++)
 		{
-            _boids[i] = new Boid(new Vector3(Random.Range(-_spawnPlace, _spawnPlace), Random.Range(-_spawnPlace, _spawnPlace), Random.Range(-_spawnPlace, _spawnPlace)), new Vector3(Random.Range(-_spawnSpeed, _spawnSpeed), Random.Range(-_spawnSpeed, _spawnSpeed), Random.Range(-_spawnSpeed, _spawnSpeed)));
+			_boids[i] = new Boid(new Vector3(Random.Range(-_spawnPlace, _spawnPlace), Random.Range(-_spawnPlace, _spawnPlace), Random.Range(-_spawnPlace, _spawnPlace)), 
+                                    new Vector3(Random.Range(-_spawnSpeed, _spawnSpeed), Random.Range(-_spawnSpeed, _spawnSpeed), Random.Range(-_spawnSpeed, _spawnSpeed)));
 		}
 	}
 
@@ -76,7 +77,6 @@ public class Boids : MonoBehaviour
                 }
 			}
 		}
-
         return v2Sum / 50 * _seperationnWeight;
 	}
 
@@ -91,7 +91,6 @@ public class Boids : MonoBehaviour
                 v3Sum += i.Velocity;
 			}
 		}
-
         v3Sum = v3Sum / _boidAmount;
 
         return (v3Sum - boid.Velocity) / 8 * _alignmentWeight;
