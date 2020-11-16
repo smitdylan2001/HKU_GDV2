@@ -25,6 +25,7 @@ public class Boid
 		_boidRB.useGravity = false;
 	}
 
+	//move boid into the right direction
 	public void UpdatePhysics()
 	{ 
 		_boidGO.transform.position = Position;

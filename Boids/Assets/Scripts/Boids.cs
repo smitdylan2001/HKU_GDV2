@@ -20,6 +20,7 @@ public class Boids : MonoBehaviour
         _testObject = GameObject.Find("tes");
     }
 
+    //Spawn boids
     void InitializeBoids(int amount)
 	{
         _boids = new Boid[_boidAmount];
@@ -32,6 +33,7 @@ public class Boids : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Loop through all boids and update their position with the correct values
         foreach (Boid i in _boids)
 		{
             v1 = Cohesion(i);
@@ -46,7 +48,7 @@ public class Boids : MonoBehaviour
         _testObject.transform.position = v1Sum;
     }
 
-
+    //Get boids to move towards eachother
     Vector3 Cohesion(Boid boid)
 	{
         v1Sum = Vector3.zero;
@@ -60,7 +62,7 @@ public class Boids : MonoBehaviour
         return (v1Sum - boid.Position) / 100 * _cohesionWeight;
 	}
 
-
+    //Make sure boids dont hit eachother
     Vector3 Separation(Boid boid)
 	{
         v2Sum = Vector3.zero;
@@ -80,6 +82,7 @@ public class Boids : MonoBehaviour
         return v2Sum / 50 * _seperationnWeight;
 	}
 
+    //Try to match the speed of other boids
     Vector3 Alignment(Boid boid)
 	{
         v3Sum = Vector3.zero;
