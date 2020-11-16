@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
 public class Astar
 {
 	List<Node> openNodes = new List<Node>();
-	List<Node> closedNodes = new List<Node>();
-	List<Vector2Int> pathToTarget;
+	Node currentNode;
 
 	/// <summary>
-	/// TODO: Implement this function so that it returns a list of Vector2Int positions which describes a path
-	/// Note that you will probably need to add some helper functions
-	/// from the startPos to the endPos
+	/// Returns a path from the character to the end position
 	/// </summary>
 	/// <param name="startPos"></param>
 	/// <param name="endPos"></param>
@@ -20,86 +16,102 @@ public class Astar
 	/// <returns></returns>
 	public List<Vector2Int> FindPathToTarget(Vector2Int startPos, Vector2Int endPos, Cell[,] grid)
 	{
+		Node[,] map = CreateNodeGrid(grid, endPos);
 		openNodes.Clear();
-		closedNodes.Clear();
+
+		//Get nodes from startposition and endposition
+		map[startPos.x, startPos.y].GScore = (int)Vector2.Distance(startPos, startPos);
+		map[startPos.x, startPos.y].HScore = (int)Vector2.Distance(startPos, endPos);
+		Node startNode = map[startPos.x, startPos.y];
+		Node endNode = map[endPos.x, endPos.y];
 		
-		Node startNode = new Node(startPos, null, 0, 0);
-		Node endNode = new Node(endPos, null, 0, 0);
-		Node currentNode;
-		openNodes.Add(startNode);
+		openNodes.Add(map[startPos.x, startPos.y]);
 
-		int Heuristic(Node a, Node b)
-		{
-			int x = Mathf.Abs(a.position.x - b.position.x);
-			int y = Mathf.Abs(a.position.y - b.position.y);
-			return x + y;
-		}
-
+		//Loop through all open nodes
 		while (openNodes.Count > 0)
 		{
-			currentNode = openNodes[0];
-			for (int i = 0; i < openNodes.Count; i++)
-			{
-				if (openNodes[i].FScore < currentNode.FScore)
-				{
-					currentNode = openNodes[i];
-				}
+			currentNode = openNodes.OrderBy((x) => x.FScore).First();
 
-				if (openNodes[i].FScore == currentNode.FScore)
-				{
-					if (openNodes[i].GScore > currentNode.GScore)
-					{
-						currentNode = openNodes[i];
-					}
-				}
-			}
+			//Check if the endNode is reached and get the path
 			if (currentNode == endNode)
 			{
-				GetPath(currentNode);
-				break;
+				return getPath(currentNode, startNode);
 			}
-
 			openNodes.Remove(currentNode);
-			closedNodes.Add(currentNode);
 
-			foreach (Node neighbour in currentNode.GetNeighbours(grid))
+			//Check for the best available neighbouring cell/node
+			foreach (Cell neighbourCell in FindNeighbours(grid[currentNode.position.x,currentNode.position.y], grid))
 			{
-				if (!closedNodes.Contains(neighbour))
+				Node neighbour = map[neighbourCell.gridPosition.x, neighbourCell.gridPosition.y];
+				float tempG = currentNode.GScore + (int)Vector2.Distance(neighbour.position, currentNode.position);
+				if (tempG < neighbour.GScore)
 				{
-					float tempG = currentNode.GScore + Heuristic(neighbour, currentNode);
 					if (!openNodes.Contains(neighbour))
 					{
+						neighbour.parent = currentNode;
+						neighbour.GScore = tempG;
 						openNodes.Add(neighbour);
-					}
-					else if (tempG >= neighbour.GScore)
-					{
-						continue;
-					}
-
-					neighbour.GScore = tempG;
-					neighbour.HScore = Heuristic(neighbour, endNode);
-					float temp = neighbour.FScore;
-					neighbour.previous = currentNode;
-				}
+					} 
+				}				
 			}
 		}
+		return null;
+	}
 
-		List<Node> GetPath(Node node)
+	//Create grid of nodes from grid of cells
+	Node[,] CreateNodeGrid(Cell[,] grid, Vector2Int endPos)
+	{
+		Node[,] map = new Node[grid.GetLength(0), grid.GetLength(1)];
+
+		foreach (Cell c in grid)
 		{
-			pathToTarget.Clear();
-			List<Node> path = new List<Node>();
-			Node temp = node;
-			path.Add(temp);
-			while (temp.previous != null)
-			{
-				path.Add(temp.previous);
-				temp = temp.previous;
-				pathToTarget.Add(new Vector2Int(temp.previous.position.x, temp.previous.position.y));
-			}
-			return path;
+			Vector2Int gridPos = c.gridPosition;
+			map[gridPos.x, gridPos.y] = new Node(gridPos, null, int.MaxValue, (int)Vector2.Distance(gridPos, endPos)); //can me imprecise
 		}
 
-		return pathToTarget;
+		return map;
+	}
+
+	//get the path from start to end
+	List<Vector2Int> getPath(Node node, Node startNode)
+	{
+		List<Vector2Int> path = new List<Vector2Int>();
+		while (currentNode.position != startNode.position)
+		{
+			path.Add(currentNode.position);
+			currentNode = currentNode.parent;
+			if (currentNode == null) break;
+		}
+		path.Reverse();
+		return path;
+	}
+
+	//Find all neighbouring cells, while not goinh through walls
+	private IEnumerable<Cell> FindNeighbours(Cell cell, Cell[,] grid)
+	{
+		List<Cell> neighbours = new List<Cell>();
+
+		if (!cell.HasWall(Wall.UP))
+		{
+			neighbours.Add(grid[cell.gridPosition.x, cell.gridPosition.y + 1]);
+		}
+
+		if (!cell.HasWall(Wall.DOWN))
+		{
+			neighbours.Add(grid[cell.gridPosition.x, cell.gridPosition.y - 1]);
+		}
+
+		if (!cell.HasWall(Wall.LEFT))
+		{
+			neighbours.Add(grid[cell.gridPosition.x - 1, cell.gridPosition.y]);
+		}
+
+		if (!cell.HasWall(Wall.RIGHT))
+		{
+			neighbours.Add(grid[cell.gridPosition.x + 1, cell.gridPosition.y]);
+		}
+
+		return neighbours;
 	}
 }
 
@@ -122,39 +134,11 @@ public class Node
 
     public Node() { }
 
-	public Node(Vector2Int position)
-	{
-		this.position = position;
-	}
-
 	public Node(Vector2Int position, Node parent, int GScore, int HScore)
     {
         this.position = position;
         this.parent = parent;
         this.GScore = GScore;
         this.HScore = HScore;
-    }
-
-    public List<Node> GetNeighbours(Cell[,] map)
-    {
-        List<Node> neighbours = new List<Node>();
-        Vector2Int[] vector2Ints = { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
-        foreach (Vector2Int vector2Int in vector2Ints)
-        {
-            Vector2Int possibleNeighbourPosition = vector2Int + position;
-            if (possibleNeighbourPosition.x >= 0 &&
-                possibleNeighbourPosition.y >= 0 &&
-                possibleNeighbourPosition.x <= map.GetUpperBound(0) &&
-                possibleNeighbourPosition.y <= map.GetUpperBound(1))
-            {
-                Node neighbour = new Node(new Vector2Int(possibleNeighbourPosition.x, possibleNeighbourPosition.y));
-                if (neighbour.walkable)
-                {
-                    neighbours.Add(neighbour);
-                }
-            }
-        }
-
-        return neighbours;
-    }
+    }    
 }
