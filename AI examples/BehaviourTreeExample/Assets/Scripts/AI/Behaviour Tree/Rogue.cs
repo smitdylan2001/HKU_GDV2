@@ -41,6 +41,7 @@ public class Rogue : MonoBehaviour
 					new BTGoToPlayer(_walkSpeed, _playerReference, _agent, this.gameObject),
 					new BTWait(3f)
 				);
+
 		_rescueBehaviour =
 			new BTSequence(
 					new BTInvert(new BTCheckPlayerAttacked()),
