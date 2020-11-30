@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BlackBoard
+public class BlackBoard : MonoBehaviour
 {
-    public static bool HasBeenAttacked;
     [SerializeField] private List<FloatValue> floatVariables = new List<FloatValue>();
     public Dictionary<VariableType, FloatValue> VariableDictionary { get; private set; } = new Dictionary<VariableType, FloatValue>();
 

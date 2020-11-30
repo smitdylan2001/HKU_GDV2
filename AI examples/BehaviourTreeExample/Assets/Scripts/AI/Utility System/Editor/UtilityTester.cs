@@ -33,7 +33,7 @@ public class UtilityTester : EditorWindow
         agent = EditorGUILayout.ObjectField("Agent", agent, typeof(UnityEngine.GameObject), true) as GameObject;
         if(agent == null) { return; }
 
-        agent.GetComponent<Agent>().OnInitialize();
+        agent.GetComponent<Guard>().OnInitialize();
 
         var aiBehaviours = agent.GetComponents<AIBehaviour>();
 
@@ -60,7 +60,7 @@ public class UtilityTester : EditorWindow
             EditorGUI.indentLevel = 3;
             foreach (var ev in evaluators)
             {
-                EditorGUILayout.CurveField(ev.VariableType.ToString(), ev.evaluationCurve);
+                EditorGUILayout.CurveField(ev.VariableType.ToString(), ev.EvaluationCurve);
             }
             EditorGUI.indentLevel = 0;
         }

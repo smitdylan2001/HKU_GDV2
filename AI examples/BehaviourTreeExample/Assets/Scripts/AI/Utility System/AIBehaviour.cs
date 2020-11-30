@@ -7,7 +7,10 @@ public abstract class AIBehaviour : MonoBehaviour
      
     public void OnInitialize(BlackBoard bb)
     {
-        
+        foreach(UtilityEvaluator utility in utilities)
+		{
+            utility.OnInitialize(bb);
+		}
     }
 
     public float GetNormalizedScore()

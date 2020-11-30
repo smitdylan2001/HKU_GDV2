@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class BlindedBehaviour : MonoBehaviour
+public class BlindedBehaviour : AIBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] private Transform[] _hidingSpots;
+	private NavMeshAgent _agent;
+	private Animator _animator;
 
-    // Update is called once per frame
-    void Update()
+	private void Start()
+	{
+		_animator = GetComponentInChildren<Animator>();
+		_agent = GetComponent<NavMeshAgent>();
+	}
+
+	public override void Execute()
     {
-        
+		_agent.speed = 0.5f;
+
+		_agent.SetDestination(_hidingSpots[Random.Range(0, _hidingSpots.Length)].position);
     }
 }

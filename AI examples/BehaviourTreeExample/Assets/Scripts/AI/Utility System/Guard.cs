@@ -4,38 +4,57 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Guard : MonoBehaviour
+public class Guard : MonoBehaviour, IDamageable
 {
-    private BTBaseNode tree;
-    private NavMeshAgent agent;
-    private Animator animator;
+    private NavMeshAgent _agent;
+    private Animator _animator;
+    [SerializeField] private FloatValue _health;
+    [SerializeField] private VariableFloat _walkSpeed;
+    [SerializeField] private VariableFloat _runSpeed;
+    [SerializeField] private VariableFloat _sightDegree;
+    [SerializeField] private VariableFloat _sightDistance;
+    [SerializeField] private VariableFloat _attackRange;
+
+    [SerializeField] private GameObject _playerReference;
+
+    public AISelector AISelector { get; private set; }
+    public BlackBoard BlackBoard { get; private set; }
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponentInChildren<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponentInChildren<Animator>();
     }
-
-    private void Start()
+    
+    void Start()
     {
-        //Create your Behaviour Tree here!
+        _agent.stoppingDistance = 1f;
+        OnInitialize();
     }
 
-    private void FixedUpdate()
+    public void OnInitialize()
     {
-        tree?.Run();
+        AISelector = GetComponent<AISelector>();
+        BlackBoard = GetComponent<BlackBoard>();
+        BlackBoard.OnInitialize();
+        AISelector.OnInitialize(BlackBoard);
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Handles.color = Color.yellow;
-    //    Vector3 endPointLeft = viewTransform.position + (Quaternion.Euler(0, -ViewAngleInDegrees.Value, 0) * viewTransform.transform.forward).normalized * SightRange.Value;
-    //    Vector3 endPointRight = viewTransform.position + (Quaternion.Euler(0, ViewAngleInDegrees.Value, 0) * viewTransform.transform.forward).normalized * SightRange.Value;
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            TakeDamage(null, 5);
+        }
+        var distance = BlackBoard.GetFloatVariableValue(VariableType.Distance);
+        distance.Value = Vector3.Distance(transform.position, _playerReference.transform.position);
 
-    //    Handles.DrawWireArc(viewTransform.position, Vector3.up, Quaternion.Euler(0, -ViewAngleInDegrees.Value, 0) * viewTransform.transform.forward, ViewAngleInDegrees.Value * 2, SightRange.Value);
-    //    Gizmos.DrawLine(viewTransform.position, endPointLeft);
-    //    Gizmos.DrawLine(viewTransform.position, endPointRight);
+        AISelector.OnUpdate();
+    }
 
-    //}
+	public void TakeDamage(GameObject attacker, int damage)
+	{
+        _health.Value -= damage;
+    }
 }

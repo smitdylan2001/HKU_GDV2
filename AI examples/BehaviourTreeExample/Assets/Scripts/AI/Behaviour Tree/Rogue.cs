@@ -44,7 +44,7 @@ public class Rogue : MonoBehaviour
 
 		_rescueBehaviour =
 			new BTSequence(
-					new BTInvert(new BTCheckPlayerAttacked()),
+					new BTCheckPlayerAttacked(),
 					new BTHide(_runSpeed, _hidingSpots, _agent, this.gameObject),
 					new BTWait(1f),
 					new BTThrowSmoke(_smoke, _enemyReference)
