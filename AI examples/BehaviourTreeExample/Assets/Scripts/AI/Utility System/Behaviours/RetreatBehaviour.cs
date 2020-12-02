@@ -7,6 +7,7 @@ using System.Linq;
 public class RetreatBehaviour : AIBehaviour
 {
 	[SerializeField] private Transform[] _hidingSpots;
+	[SerializeField] private FloatValue _health;
 	private NavMeshAgent _agent;
 	private Animator _animator;
 
@@ -20,5 +21,6 @@ public class RetreatBehaviour : AIBehaviour
 		_agent.speed = 4;
 		_hidingSpots = _hidingSpots.OrderBy(x => (x.position).sqrMagnitude).ToArray();
 		_agent.SetDestination(_hidingSpots.Last().position);
+		if (_agent.remainingDistance <= 1) _health.Value += Time.deltaTime*2;
 	}
 }

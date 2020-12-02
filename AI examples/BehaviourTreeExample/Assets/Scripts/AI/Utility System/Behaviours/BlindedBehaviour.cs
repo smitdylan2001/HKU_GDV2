@@ -27,6 +27,7 @@ public class BlindedBehaviour : AIBehaviour
 		{
 			BlackBoard.GuardBlinded = false;
 			_hasSelectedLocation = false;
+			_smoke.SetActive(false);
 		}
     }
 
@@ -39,7 +40,7 @@ public class BlindedBehaviour : AIBehaviour
 			_hasSelectedLocation = true;
 		}
 		BlackBoard.HasBeenAttacked = false;
-		_smoke.SetActive(false);
+		
 		yield return null;
 	}
 }

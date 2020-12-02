@@ -18,6 +18,6 @@ public class VariableGameObject : BaseScriptableObject
 
 	public override void OnReset()
 	{
-		throw new System.NotImplementedException();
+		
 	}
 }

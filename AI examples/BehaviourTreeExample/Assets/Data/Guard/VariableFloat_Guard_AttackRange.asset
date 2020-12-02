@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1ab4d9702c6cb4d9a82b3a9dcbced0, type: 3}
   m_Name: VariableFloat_Guard_AttackRange
   m_EditorClassIdentifier: 
-  autoReset: 1
-  value: 1.5
+  autoReset: 0
+  value: 1

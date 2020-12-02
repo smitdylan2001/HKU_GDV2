@@ -41,7 +41,16 @@ public class AISelector : MonoBehaviour
 
     public void OnUpdate()
     {
-        EvaluateBehaviours();
+        StartCoroutine(asyncUpdate());
         _currentBehaviour?.Execute();
+    }
+
+    private IEnumerator asyncUpdate()
+	{
+        while (true)
+		{
+            EvaluateBehaviours();
+            yield return new WaitForSeconds(3f);
+		}
     }
 }

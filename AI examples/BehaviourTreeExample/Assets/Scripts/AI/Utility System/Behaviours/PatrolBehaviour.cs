@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class PatrolBehaviour : AIBehaviour
 {
     [SerializeField] private Transform[] _patrolPath;
+	[SerializeField] private FloatValue _health;
 	private NavMeshAgent _agent;
 	private Animator _animator;
 	private int _currentSpot;
@@ -23,7 +24,8 @@ public class PatrolBehaviour : AIBehaviour
 			GoToNextSpot(_patrolPath[_currentSpot]);
 			_currentSpot = (_currentSpot + 1) % 6;
 		}
-    }
+		_health.Value += Time.deltaTime / 10;
+	}
 
 	private void GoToNextSpot(Transform place)
 	{
