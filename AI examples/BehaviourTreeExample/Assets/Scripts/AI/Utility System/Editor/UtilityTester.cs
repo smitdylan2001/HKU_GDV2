@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using NUnit.Framework.Constraints;
 using System;
 
 public class UtilityTester : EditorWindow
 {
     private GameObject agent;
-    private Dictionary<VariableType, FloatValue> variables = new Dictionary<VariableType, FloatValue>();
+    private List<FloatValue> variables = new List<FloatValue>();
 
     private List<bool> toggleGroups = new List<bool>();
     // Add menu named "My Window" to the Window menu
     [MenuItem("Window/UtilityTester")]
-    static void Init()
+    static void Init() 
     {
         // Get existing open window or if none, make a new one:
         UtilityTester window = (UtilityTester)EditorWindow.GetWindow(typeof(UtilityTester));
         window.Show();
+    }
+
+    private void OnEnable()
+    {
+        
     }
 
     void Update()
@@ -34,7 +38,7 @@ public class UtilityTester : EditorWindow
         if(agent == null) { return; }
 
         agent.GetComponent<Guard>().OnInitialize();
-
+        
         var aiBehaviours = agent.GetComponents<AIBehaviour>();
 
         EditorGUILayout.LabelField("Behaviours", EditorStyles.boldLabel);
@@ -60,7 +64,7 @@ public class UtilityTester : EditorWindow
             EditorGUI.indentLevel = 3;
             foreach (var ev in evaluators)
             {
-                EditorGUILayout.CurveField(ev.VariableType.ToString(), ev.EvaluationCurve);
+                EditorGUILayout.CurveField(ev.VariableType.ToString(), ev.evaluationCurve);
             }
             EditorGUI.indentLevel = 0;
         }
@@ -70,12 +74,12 @@ public class UtilityTester : EditorWindow
         EditorGUI.indentLevel = 2;
 
         var bb = agent.GetComponent<BlackBoard>();
-        variables = bb.VariableDictionary;
+        variables = bb.FloatVariables;
         if (variables != null)
         {
             foreach (var kv in variables)
             {
-                kv.Value.Value = EditorGUILayout.Slider(kv.Value.name, kv.Value.Value, kv.Value.MinValue, kv.Value.MaxValue);
+                kv.Value = EditorGUILayout.Slider(kv.name, kv.Value, kv.MinValue, kv.MaxValue);
             }
         }
         EditorGUI.indentLevel = 0;

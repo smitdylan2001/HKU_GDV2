@@ -9,17 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675bccba131aba0479b7e886ac1af855, type: 3}
+  m_Script: {fileID: 11500000, guid: 3058c162b96a3c64fba3ab7269ce0002, type: 3}
   m_Name: DistanceEvaluator_Attack
   m_EditorClassIdentifier: 
-  autoReset: 1
   VariableType: 1
-  EvaluationCurve:
+  evaluationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -27,13 +26,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
+      time: 0.44053227
+      value: 0.079558976
+      inSlope: -0.68400663
+      outSlope: -0.68400663
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.168769
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1382964
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

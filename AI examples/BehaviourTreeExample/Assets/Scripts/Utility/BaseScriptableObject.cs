@@ -2,9 +2,11 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 [InitializeOnLoad]
+#endif
 public abstract class BaseScriptableObject : ScriptableObject
 {
     [SerializeField] private bool autoReset = true;
+#if UNITY_EDITOR
     public BaseScriptableObject()
     {
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
@@ -21,10 +23,8 @@ public abstract class BaseScriptableObject : ScriptableObject
             //Resources.UnloadAsset(this);
             OnReset();
         }
-
-
     }
-
 #endif
+
     public abstract void OnReset();
 }

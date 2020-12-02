@@ -637,8 +637,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   utilities:
-  - {fileID: 11400000, guid: 26659b49c9f96dd41bea608607265595, type: 2}
   - {fileID: 11400000, guid: f48b5dc367e529945aae17514065a090, type: 2}
+  - {fileID: 11400000, guid: 26659b49c9f96dd41bea608607265595, type: 2}
   _hidingSpots:
   - {fileID: 909171285}
   - {fileID: 409442862}
@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0d4699d80d4ca4babbe78caa2e521b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatVariables:
+  FloatVariables:
   - {fileID: 11400000, guid: d06f7f27e57e8724aaa46d33fdb03de0, type: 2}
   - {fileID: 11400000, guid: c31ae729b45a4e7478a01faf668e3708, type: 2}
 --- !u!1 &577628390

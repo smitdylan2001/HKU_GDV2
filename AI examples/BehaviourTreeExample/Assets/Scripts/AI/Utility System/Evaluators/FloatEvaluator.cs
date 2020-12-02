@@ -3,20 +3,20 @@
 [CreateAssetMenu(fileName = "FloatEvaluator", menuName = "Evaluators/FloatEvaluator")]
 public class FloatEvaluator : UtilityEvaluator
 {
-    private FloatValue _floatValue;
+    private FloatValue floatValue;
 
     public override void OnInitialize(BlackBoard bb)
     {
-        _floatValue = bb.GetFloatVariableValue(VariableType);
+        floatValue = bb.GetFloatVariableValueFromList(VariableType);
     }
 
     public override float GetMaxValue()
     {
-        return _floatValue.MaxValue;
+        return floatValue.MaxValue;
     }
 
     public override float GetValue()
     {
-        return _floatValue.Value;
+        return floatValue.Value;
     }
 }

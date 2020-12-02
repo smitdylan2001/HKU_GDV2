@@ -29,11 +29,11 @@ public class Guard : MonoBehaviour, IDamageable
     void Start()
     {
         OnInitialize();
+        _agent.stoppingDistance = 0.5f;
     }
 
     public void OnInitialize()
     {
-        _agent.stoppingDistance = 0.5f;
         AISelector = GetComponent<AISelector>();
         BlackBoard = GetComponent<BlackBoard>();
         BlackBoard.OnInitialize();
@@ -56,5 +56,6 @@ public class Guard : MonoBehaviour, IDamageable
 	public void TakeDamage(GameObject attacker, int damage)
 	{
         _health.Value -= damage;
+        AISelector.EvaluateBehaviours();
     }
 }
