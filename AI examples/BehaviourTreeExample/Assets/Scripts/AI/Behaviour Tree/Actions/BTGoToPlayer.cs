@@ -24,7 +24,6 @@ public class BTGoToPlayer : BTBaseNode
 		{
 			return TaskStatus.Running;
 		}
-		Debug.Log("succes");
 		return TaskStatus.Success;
 	}
 }

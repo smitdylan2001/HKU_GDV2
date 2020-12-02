@@ -22,10 +22,9 @@ public class BTHide : BTBaseNode
 		_agent.speed = _runSpeed.Value;
 
 		_hidingSpots = _hidingSpots.OrderBy(x => (x.position).sqrMagnitude).ToArray();
-		_agent.SetDestination(_hidingSpots.First().position);
 		_agent.SetDestination(_hidingSpots.Last().position);
 
-		if (_agent.pathStatus != NavMeshPathStatus.PathComplete && _agent.remainingDistance <= 0)
+		if (_agent.remainingDistance > _agent.stoppingDistance)
 		{
 			return TaskStatus.Running;
 		}

@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, IDamageable
             rib.AddForce(Vector3.Scale(new Vector3(1,0.5f,1),(transform.position - attacker.transform.position).normalized * deathForce));
         }
         ragdoll.transform.SetParent(null);
-
+        BlackBoard.HasBeenAttacked = true;
         gameObject.SetActive(false);
     }
 

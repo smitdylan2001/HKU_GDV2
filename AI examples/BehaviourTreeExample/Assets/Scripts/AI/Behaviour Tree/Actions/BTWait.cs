@@ -18,7 +18,6 @@ public class BTWait : BTBaseNode
 			return TaskStatus.Running;
 		}
 		_currentDuration = 0;
-		Debug.Log("Done Waiting");
 		return TaskStatus.Success;
 	}
 }

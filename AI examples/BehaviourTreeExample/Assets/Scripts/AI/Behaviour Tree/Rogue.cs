@@ -67,7 +67,7 @@ public class Rogue : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			BlackBoard.HasBeenAttacked = !BlackBoard.HasBeenAttacked;
-			Debug.Log("BlackBoard.HasBeenAttacked");
+			Debug.Log("BlackBoard.HasBeenAttacked: " + BlackBoard.HasBeenAttacked);
 		}
 	}
 }

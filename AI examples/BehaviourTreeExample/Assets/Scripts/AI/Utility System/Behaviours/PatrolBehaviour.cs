@@ -8,7 +8,7 @@ public class PatrolBehaviour : AIBehaviour
 	private Animator _animator;
 	private int _currentSpot;
 
-	private void Start()
+	private void Awake()
 	{
 		_animator = GetComponentInChildren<Animator>();
 		_agent = GetComponent<NavMeshAgent>();

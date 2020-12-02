@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public abstract class UtilityEvaluator : BaseScriptableObject
+public abstract class UtilityEvaluator : ScriptableObject
 {
     public VariableType VariableType;
 
@@ -11,5 +11,4 @@ public abstract class UtilityEvaluator : BaseScriptableObject
     {
         return Mathf.Clamp01(EvaluationCurve.Evaluate(GetValue() / GetMaxValue()));
     }
-
 }

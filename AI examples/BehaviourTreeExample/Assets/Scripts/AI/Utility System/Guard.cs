@@ -28,12 +28,12 @@ public class Guard : MonoBehaviour, IDamageable
     
     void Start()
     {
-        _agent.stoppingDistance = 1f;
         OnInitialize();
     }
 
     public void OnInitialize()
     {
+        _agent.stoppingDistance = 0.5f;
         AISelector = GetComponent<AISelector>();
         BlackBoard = GetComponent<BlackBoard>();
         BlackBoard.OnInitialize();

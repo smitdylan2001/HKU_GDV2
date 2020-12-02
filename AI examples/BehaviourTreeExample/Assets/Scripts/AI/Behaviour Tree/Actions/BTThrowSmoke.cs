@@ -13,10 +13,12 @@ public class BTThrowSmoke : BTBaseNode
 
 	public override TaskStatus Run()
 	{
-		Debug.Log("throw");
-		_smoke.transform.position = _enemy.transform.position;
-		_smoke.SetActive(true);
-		
+		if (!_smoke.activeSelf)
+		{
+			_smoke.transform.position = _enemy.transform.position;
+			_smoke.SetActive(true);
+			BlackBoard.GuardBlinded = true;
+		}
 		return TaskStatus.Success;
 	}
 

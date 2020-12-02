@@ -22,7 +22,15 @@ public class AISelector : MonoBehaviour
 	{
         AIBehaviour newBehaviour = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).First();
 
-        if (newBehaviour != _currentBehaviour)
+        if (BlackBoard.GuardBlinded)
+		{
+            newBehaviour = GetComponent<BlindedBehaviour>();
+            Debug.Log(newBehaviour.GetType().Name);
+            _currentBehaviour?.OnExit();
+            _currentBehaviour = newBehaviour;
+            _currentBehaviour.OnEnter();
+        }
+        else if (newBehaviour != _currentBehaviour)
 		{
             Debug.Log(newBehaviour.GetType().Name);
             _currentBehaviour?.OnExit();

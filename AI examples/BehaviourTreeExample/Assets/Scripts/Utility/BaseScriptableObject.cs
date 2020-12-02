@@ -13,12 +13,18 @@ public abstract class BaseScriptableObject : ScriptableObject
     {
         if (state == PlayModeStateChange.ExitingEditMode)
         {
-            AssetDatabase.SaveAssets();
+            //AssetDatabase.SaveAssets();
+            OnReset();
         }
         if (state == PlayModeStateChange.EnteredEditMode && autoReset)
         {
-            Resources.UnloadAsset(this);
+            //Resources.UnloadAsset(this);
+            OnReset();
         }
+
+
     }
-}
+
 #endif
+    public abstract void OnReset();
+}

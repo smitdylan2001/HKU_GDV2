@@ -6,6 +6,7 @@ using UnityEngine;
 public class BlackBoard : MonoBehaviour
 {
     public static bool HasBeenAttacked = false; //TODO: Implement this properly in the behaviour tree 
+    public static bool GuardBlinded = false; //TODO: Implement this properly in the utility system
 
     [SerializeField] private List<FloatValue> floatVariables = new List<FloatValue>();
     public Dictionary<VariableType, FloatValue> VariableDictionary { get; private set; } = new Dictionary<VariableType, FloatValue>();

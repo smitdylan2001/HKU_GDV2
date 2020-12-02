@@ -10,7 +10,7 @@ public class AttackBehaviour : AIBehaviour
 	private NavMeshAgent _agent;
 	private Animator _animator;
 
-	private void Start()
+	private void Awake()
 	{
 		_playerData = _playerReference.GetComponent<Player>();
 		_animator = GetComponentInChildren<Animator>();
@@ -19,11 +19,12 @@ public class AttackBehaviour : AIBehaviour
 
 	public override void Execute()
 	{
-		_agent.speed = 3;
+		_agent.speed = 2;
 		_agent.SetDestination(_playerReference.transform.position);
-
-		if (_agent.remainingDistance <= 1f && _playerReference.activeSelf)
+		Debug.Log(_agent.remainingDistance);
+		if (_agent.hasPath && _agent.remainingDistance <= 1f && _playerReference.activeSelf)
 		{
+			Debug.Log("AATTACK");
 			_playerData.TakeDamage(this.gameObject, 10);
 		}
 	}
