@@ -11,13 +11,8 @@ public class VariableFloat : BaseScriptableObject
         get { return value; }
         set
         {
-            OnValueChanged?.Invoke(this.value, value); 
+            OnValueChanged?.Invoke(this.value, value);
             this.value = value;
         }
     }
-
-	public override void OnReset()
-	{
-        value = 15;
-	}
 }

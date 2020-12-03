@@ -15,9 +15,4 @@ public class VariableGameObject : BaseScriptableObject
             this.value = value;
         }
     }
-
-	public override void OnReset()
-	{
-		
-	}
 }

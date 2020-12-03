@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: VariableFloat_Guard_StoppingDistance
   m_EditorClassIdentifier: 
   autoReset: 0
-  value: 0.5
+  value: 1

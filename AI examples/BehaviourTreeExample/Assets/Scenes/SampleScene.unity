@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 165667811}
   - component: {fileID: 165667810}
   - component: {fileID: 165667814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,6 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c57f348e42646b4091d49d27b0a283d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
   _health: {fileID: 11400000, guid: d06f7f27e57e8724aaa46d33fdb03de0, type: 2}
   _walkSpeed: {fileID: 11400000, guid: 8439a8917c2a36f42b9ecd44321ee4e6, type: 2}
   _runSpeed: {fileID: 11400000, guid: df22b19d0e8cfa343b01357f86934156, type: 2}
@@ -971,7 +974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673616978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.249007, y: 31.446072, z: 18.730665}
+  m_LocalPosition: {x: -16.76, y: 31.446072, z: 21.18}
   m_LocalScale: {x: 0.28638914, y: 0.48308, z: 0.48308}
   m_Children: []
   m_Father: {fileID: 1676251412}
@@ -1611,7 +1614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164381135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.539007, y: 31.446072, z: 25.250664}
+  m_LocalPosition: {x: -7.24, y: 31.446072, z: 9.39}
   m_LocalScale: {x: 0.28638914, y: 0.48308, z: 0.48308}
   m_Children: []
   m_Father: {fileID: 1676251412}
@@ -1894,7 +1897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438152361}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.099007, y: 31.446072, z: 21.050665}
+  m_LocalPosition: {x: -31.35, y: 31.446072, z: 29.63}
   m_LocalScale: {x: 0.28638914, y: 0.48308, z: 0.48308}
   m_Children: []
   m_Father: {fileID: 1676251412}
@@ -2362,7 +2365,7 @@ GameObject:
   - component: {fileID: 1744050387}
   - component: {fileID: 1744050386}
   - component: {fileID: 1744050390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2534,7 +2537,7 @@ GameObject:
   - component: {fileID: 1832966959}
   - component: {fileID: 1832966958}
   - component: {fileID: 1832966962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
