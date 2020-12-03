@@ -20,28 +20,33 @@ public class AISelector : MonoBehaviour
 
     public void EvaluateBehaviours()
 	{
-        AIBehaviour newBehaviour = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).First();
+        if (!BlackBoard.PlayerSeen) _attackBehaviour.IncreasedAmount = -20;
+        else if (_attackBehaviour.IncreasedAmount < 0) _attackBehaviour.IncreasedAmount = 0;
 
-        if (BlackBoard.GuardBlinded)
+        if (BlackBoard.GuardBlinded) _blindedBehaviour.IncreasedAmount = -20;
+        else _blindedBehaviour.IncreasedAmount = 0;
+
+        _behaviours = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).ToArray();
+        AIBehaviour newBehaviour = _behaviours.First();
+
+        if (newBehaviour != _currentBehaviour)
 		{
             newBehaviour = GetComponent<BlindedBehaviour>();
             Debug.Log(newBehaviour.GetType().Name);
             _currentBehaviour?.OnExit();
             _currentBehaviour = newBehaviour;
             _currentBehaviour.OnEnter();
-        }
-        else if (newBehaviour != _currentBehaviour)
-		{
-            Debug.Log(newBehaviour.GetType().Name);
-            _currentBehaviour?.OnExit();
-            _currentBehaviour = newBehaviour;
-            _currentBehaviour.OnEnter();
+            //_currentBehaviour.IncreasedAmount += 5;
 		}
-	}
+        Debug.Log(newBehaviour.GetType().Name);
+
+    }
 
     public void OnUpdate()
     {
         StartCoroutine(asyncUpdate());
+        EvaluateBehaviours();
+        StartCoroutine(KeepBehaviourLonger(_currentBehaviour));
         _currentBehaviour?.Execute();
     }
 
@@ -49,8 +54,14 @@ public class AISelector : MonoBehaviour
 	{
         while (true)
 		{
-            EvaluateBehaviours();
+            
             yield return new WaitForSeconds(3f);
 		}
+    }
+
+    private IEnumerator KeepBehaviourLonger(AIBehaviour behaviour)
+    {
+        if (behaviour.IncreasedAmount > 0) behaviour.IncreasedAmount -= Time.deltaTime /10;
+        yield return null;
     }
 }

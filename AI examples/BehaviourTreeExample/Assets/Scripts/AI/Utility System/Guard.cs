@@ -51,6 +51,7 @@ public class Guard : MonoBehaviour, IDamageable
         distance.Value = Vector3.Distance(transform.position, _playerReference.transform.position);
 
         AISelector.OnUpdate();
+        FindPlayer();
     }
 
 	public void TakeDamage(GameObject attacker, int damage)
@@ -58,4 +59,39 @@ public class Guard : MonoBehaviour, IDamageable
         _health.Value -= damage;
         AISelector.EvaluateBehaviours();
     }
+
+    private void FindPlayer()
+	{
+        Collider[] targets = Physics.OverlapSphere(transform.position, _sightDistance.Value);
+
+        foreach (Collider c in targets)
+        {
+            Transform target = c.transform;
+            Vector3 direction = (target.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, direction) < _sightDegree.Value / 2)
+            {
+                float distance = Vector3.Distance(transform.position, target.position);
+                if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
+                {
+                    
+                    if (c.name == "Player") BlackBoard.PlayerSeen = true;
+                    
+                }
+            }
+        }
+        StartCoroutine(UnseePlayer());
+	}
+
+    private IEnumerator UnseePlayer()
+	{
+        yield return new WaitForSeconds(5f);
+        BlackBoard.PlayerSeen = false;
+        yield return null;
+	}
+
+    private Vector3 DirFromAngle()
+	{
+        return new Vector3(Mathf.Sin(_sightDegree.Value * Mathf.Deg2Rad), 0, Mathf.Cos(_sightDegree.Value * Mathf.Deg2Rad));
+	}
+
 }
