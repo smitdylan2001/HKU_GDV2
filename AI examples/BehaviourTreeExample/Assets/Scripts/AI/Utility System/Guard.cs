@@ -52,11 +52,11 @@ public class Guard : MonoBehaviour, IDamageable
         distance.Value = Vector3.Distance(transform.position, _playerReference.transform.position);
 
         AISelector.OnUpdate();
+        FindPlayer();
     }
 
     private void FixedUpdate()
 	{
-        FindPlayer();
 	}
 
 	public void TakeDamage(GameObject attacker, int damage)
@@ -79,17 +79,17 @@ public class Guard : MonoBehaviour, IDamageable
                 if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
                 {
                     
-                    if (c.name == "Player") BlackBoard.PlayerSeen = true; Debug.Log("player raycasted");
-                    StartCoroutine(UnseePlayer());
+                    if (c.name == "Player") BlackBoard.PlayerSeen = true;
+                    
                 }
             }
         }
-        Debug.Log(BlackBoard.PlayerSeen);
+        StartCoroutine(UnseePlayer());
 	}
 
     private IEnumerator UnseePlayer()
 	{
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         BlackBoard.PlayerSeen = false;
         yield return null;
 	}

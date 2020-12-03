@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: VariableFloat_Guard_SightRange
   m_EditorClassIdentifier: 
   autoReset: 0
-  value: 5
+  value: 6
