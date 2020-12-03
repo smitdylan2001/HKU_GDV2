@@ -6,8 +6,13 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour, IDamageable
 {
+    public AISelector AISelector { get; private set; }
+    public BlackBoard BlackBoard { get; private set; }
+
     private NavMeshAgent _agent;
     private Animator _animator;
+    [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] private GameObject _playerReference;
     [SerializeField] private FloatValue _health;
     [SerializeField] private VariableFloat _walkSpeed;
     [SerializeField] private VariableFloat _runSpeed;
@@ -15,10 +20,6 @@ public class Guard : MonoBehaviour, IDamageable
     [SerializeField] private VariableFloat _sightDistance;
     [SerializeField] private VariableFloat _attackRange;
 
-    [SerializeField] private GameObject _playerReference;
-
-    public AISelector AISelector { get; private set; }
-    public BlackBoard BlackBoard { get; private set; }
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class Guard : MonoBehaviour, IDamageable
     void Start()
     {
         OnInitialize();
+        BlackBoard.GuardBlinded = false;
         _agent.stoppingDistance = 0.5f;
     }
 
@@ -52,6 +54,9 @@ public class Guard : MonoBehaviour, IDamageable
 
         AISelector.OnUpdate();
         FindPlayer();
+
+        Debug.LogWarning("blind" + BlackBoard.GuardBlinded);
+        Debug.LogWarning("player seen" + BlackBoard.PlayerSeen);
     }
 
 	public void TakeDamage(GameObject attacker, int damage)
@@ -62,24 +67,28 @@ public class Guard : MonoBehaviour, IDamageable
 
     private void FindPlayer()
 	{
-        Collider[] targets = Physics.OverlapSphere(transform.position, _sightDistance.Value);
+        if (!BlackBoard.GuardBlinded)
+		{
+            Collider[] targets = Physics.OverlapSphere(transform.position, _sightDistance.Value);
 
-        foreach (Collider c in targets)
-        {
-            Transform target = c.transform;
-            Vector3 direction = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, direction) < _sightDegree.Value / 2)
+            foreach (Collider c in targets)
             {
-                float distance = Vector3.Distance(transform.position, target.position);
-                if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
+                Transform target = c.transform;
+                Vector3 direction = (target.position - transform.position).normalized;
+                if (Vector3.Angle(transform.forward, direction) < _sightDegree.Value / 2)
                 {
-                    
-                    if (c.name == "Player") BlackBoard.PlayerSeen = true;
-                    
+                    float distance = Vector3.Distance(transform.position, target.position);
+                    if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
+                    {
+                        if (c.name == "Player")
+                        {
+                            BlackBoard.PlayerSeen = true;
+                            StartCoroutine(UnseePlayer());
+                        }
+                    }
                 }
             }
-        }
-        StartCoroutine(UnseePlayer());
+		}
 	}
 
     private IEnumerator UnseePlayer()
@@ -93,5 +102,4 @@ public class Guard : MonoBehaviour, IDamageable
 	{
         return new Vector3(Mathf.Sin(_sightDegree.Value * Mathf.Deg2Rad), 0, Mathf.Cos(_sightDegree.Value * Mathf.Deg2Rad));
 	}
-
 }

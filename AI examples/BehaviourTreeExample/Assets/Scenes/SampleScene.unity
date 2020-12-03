@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 165667811}
   - component: {fileID: 165667810}
   - component: {fileID: 165667814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,13 +552,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c57f348e42646b4091d49d27b0a283d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _playerReference: {fileID: 1267729044}
   _health: {fileID: 11400000, guid: d06f7f27e57e8724aaa46d33fdb03de0, type: 2}
   _walkSpeed: {fileID: 11400000, guid: 8439a8917c2a36f42b9ecd44321ee4e6, type: 2}
   _runSpeed: {fileID: 11400000, guid: df22b19d0e8cfa343b01357f86934156, type: 2}
   _sightDegree: {fileID: 11400000, guid: 53f66be52aa0f7e4f91a16b3524f412d, type: 2}
   _sightDistance: {fileID: 11400000, guid: bd36500c7c2113646a09b6272e172f3f, type: 2}
   _attackRange: {fileID: 11400000, guid: 031d171b9a8ec6e41bd2ff67dc78c857, type: 2}
-  _playerReference: {fileID: 1267729044}
 --- !u!195 &539429223
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -636,9 +639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2aa6174bbce6e547a98d5c7b14df381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities:
+  Utilities:
   - {fileID: 11400000, guid: f48b5dc367e529945aae17514065a090, type: 2}
   - {fileID: 11400000, guid: 26659b49c9f96dd41bea608607265595, type: 2}
+  IncreasedAmount: 0
   _hidingSpots:
   - {fileID: 909171285}
   - {fileID: 409442862}
@@ -659,9 +663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace6df63d5d62be48bdd14c4fc6eea9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities:
+  Utilities:
   - {fileID: 11400000, guid: fd946cf9430c1944e9eaafdcaca27df1, type: 2}
   - {fileID: 11400000, guid: 4535aad7626adcd419525f6923492cdf, type: 2}
+  IncreasedAmount: 0
   _patrolPath:
   - {fileID: 1788632469}
   - {fileID: 1115411753}
@@ -682,9 +687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c603c49411d2d44998c70bf3dfd7606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities:
+  Utilities:
   - {fileID: 11400000, guid: d77d768c15de0d24888dd5b2948c1336, type: 2}
   - {fileID: 11400000, guid: 8b7311878c188d04bb3cdeeb79b1aa28, type: 2}
+  IncreasedAmount: 0
   _hidingSpots:
   - {fileID: 909171285}
   - {fileID: 409442862}
@@ -704,9 +710,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf633596f0c7fb43af10bd40c394b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities:
+  Utilities:
   - {fileID: 11400000, guid: 5c82703c691db8e47af99b5aacce2e70, type: 2}
   - {fileID: 11400000, guid: ce4711b33cbde304f83da4300b108cf3, type: 2}
+  IncreasedAmount: 0
   _playerReference: {fileID: 1267729044}
   _weapons:
   - {fileID: 1438152361}
@@ -2362,7 +2369,7 @@ GameObject:
   - component: {fileID: 1744050387}
   - component: {fileID: 1744050386}
   - component: {fileID: 1744050390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2534,7 +2541,7 @@ GameObject:
   - component: {fileID: 1832966959}
   - component: {fileID: 1832966958}
   - component: {fileID: 1832966962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

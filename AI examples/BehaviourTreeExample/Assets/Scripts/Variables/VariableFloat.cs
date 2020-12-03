@@ -5,15 +5,16 @@ public class VariableFloat : BaseScriptableObject
 {
     //Old value, New value
     public System.Action<float, float> OnValueChanged;
-    [SerializeField] private float value;
+    [SerializeField] private float _value;
     public float Value
     {
-        get { return value; }
+        get { return _value; }
         set
         {
-            OnValueChanged?.Invoke(this.value, value); 
-            this.value = value;
+            OnValueChanged?.Invoke(this._value, value); 
+            this._value = value;
         }
     }
-	{
+
+	public override void OnReset() { }
 }

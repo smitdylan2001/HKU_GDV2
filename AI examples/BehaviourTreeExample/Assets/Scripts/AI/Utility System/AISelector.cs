@@ -7,12 +7,16 @@ public class AISelector : MonoBehaviour
 {
     private AIBehaviour[] _behaviours;
     private AIBehaviour _currentBehaviour;
+    private AIBehaviour _blindedBehaviour;
+    private AIBehaviour _attackBehaviour;
 
     public void OnInitialize(BlackBoard bb)
 	{
         _behaviours = GetComponents<AIBehaviour>();
-
-        foreach(AIBehaviour bhv in _behaviours)
+        _attackBehaviour = GetComponent<AttackBehaviour>();
+        _blindedBehaviour = GetComponent<BlindedBehaviour>();
+        _currentBehaviour = GetComponent<PatrolBehaviour>();   //This is to avoid a null reference error when there is no behavior assigned and KeepBehaviourLonger runs
+        foreach (AIBehaviour bhv in _behaviours)
 		{
             bhv.OnInitialize(bb);
 		}
@@ -23,20 +27,19 @@ public class AISelector : MonoBehaviour
         if (!BlackBoard.PlayerSeen) _attackBehaviour.IncreasedAmount = -20;
         else if (_attackBehaviour.IncreasedAmount < 0) _attackBehaviour.IncreasedAmount = 0;
 
-        if (BlackBoard.GuardBlinded) _blindedBehaviour.IncreasedAmount = -20;
-        else _blindedBehaviour.IncreasedAmount = 0;
+        if (BlackBoard.GuardBlinded) _blindedBehaviour.IncreasedAmount = 20;
+        else _blindedBehaviour.IncreasedAmount = -20;
 
         _behaviours = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).ToArray();
         AIBehaviour newBehaviour = _behaviours.First();
 
         if (newBehaviour != _currentBehaviour)
-		{
-            newBehaviour = GetComponent<BlindedBehaviour>();
+		{   
             Debug.Log(newBehaviour.GetType().Name);
             _currentBehaviour?.OnExit();
             _currentBehaviour = newBehaviour;
             _currentBehaviour.OnEnter();
-            //_currentBehaviour.IncreasedAmount += 5;
+            _currentBehaviour.IncreasedAmount += .5f;
 		}
         Debug.Log(newBehaviour.GetType().Name);
 
@@ -45,7 +48,6 @@ public class AISelector : MonoBehaviour
     public void OnUpdate()
     {
         StartCoroutine(asyncUpdate());
-        EvaluateBehaviours();
         StartCoroutine(KeepBehaviourLonger(_currentBehaviour));
         _currentBehaviour?.Execute();
     }
@@ -54,7 +56,7 @@ public class AISelector : MonoBehaviour
 	{
         while (true)
 		{
-            
+            EvaluateBehaviours();
             yield return new WaitForSeconds(3f);
 		}
     }

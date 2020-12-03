@@ -21,6 +21,7 @@ public class BlindedBehaviour : AIBehaviour
 
 	public override void Execute()
     {
+		BlackBoard.PlayerSeen = false;
 		_agent.speed = 0.5f;
 		StartCoroutine(Hide());
 		if (_agent.remainingDistance <= _agent.stoppingDistance)

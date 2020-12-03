@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 public abstract class BaseScriptableObject : ScriptableObject
 {
-    [SerializeField] private bool autoReset = true;
+    [SerializeField] private bool _autoReset = true;
 #if UNITY_EDITOR
     public BaseScriptableObject()
     {
@@ -18,7 +18,7 @@ public abstract class BaseScriptableObject : ScriptableObject
             //AssetDatabase.SaveAssets();
             OnReset();
         }
-        if (state == PlayModeStateChange.EnteredEditMode && autoReset)
+        if (state == PlayModeStateChange.EnteredEditMode && _autoReset)
         {
             //Resources.UnloadAsset(this);
             OnReset();

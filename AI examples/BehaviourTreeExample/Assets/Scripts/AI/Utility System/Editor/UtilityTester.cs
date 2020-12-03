@@ -60,7 +60,7 @@ public class UtilityTester : EditorWindow
         {
             EditorGUI.indentLevel = 1;
             EditorGUILayout.LabelField(ai.GetType().Name, EditorStyles.boldLabel);
-            var evaluators = ai.utilities;
+            var evaluators = ai.Utilities;
             EditorGUI.indentLevel = 3;
             foreach (var ev in evaluators)
             {

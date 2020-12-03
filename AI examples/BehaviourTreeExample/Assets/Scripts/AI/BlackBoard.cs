@@ -7,6 +7,7 @@ public class BlackBoard : MonoBehaviour
 {
     public static bool HasBeenAttacked = false; //TODO: Implement this properly in the behaviour tree 
     public static bool GuardBlinded = false; //TODO: Implement this properly in the utility system
+    public static bool PlayerSeen = false; //TODO: Implement this properly
 
     [SerializeField] public List<FloatValue> FloatVariables = new List<FloatValue>();
 
