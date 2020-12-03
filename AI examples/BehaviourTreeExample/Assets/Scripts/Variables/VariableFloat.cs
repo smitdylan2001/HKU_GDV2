@@ -15,4 +15,9 @@ public class VariableFloat : BaseScriptableObject
             this.value = value;
         }
     }
+
+	public override void OnReset()
+	{
+		
+	}
 }

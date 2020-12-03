@@ -13,4 +13,10 @@ public class FloatValue : BaseScriptableObject
 
     [SerializeField] private float maxValue;
     public float MaxValue { get { return maxValue; } }
+
+    public override void OnReset()
+    {
+        value = maxValue;
+    }
+
 }
