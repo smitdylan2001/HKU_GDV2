@@ -7,15 +7,12 @@ public class AISelector : MonoBehaviour
 {
     private AIBehaviour[] _behaviours;
     private AIBehaviour _currentBehaviour;
-    private AIBehaviour _blindedBehaviour;
-    private AIBehaviour _attackBehaviour;
 
     public void OnInitialize(BlackBoard bb)
 	{
         _behaviours = GetComponents<AIBehaviour>();
-        _blindedBehaviour = GetComponent<BlindedBehaviour>();
-        _attackBehaviour = GetComponent<AttackBehaviour>();
-        foreach (AIBehaviour bhv in _behaviours)
+
+        foreach(AIBehaviour bhv in _behaviours)
 		{
             bhv.OnInitialize(bb);
 		}
@@ -23,26 +20,24 @@ public class AISelector : MonoBehaviour
 
     public void EvaluateBehaviours()
 	{
+        AIBehaviour newBehaviour = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).First();
 
-        //if (!BlackBoard.PlayerSeen) _attackBehaviour.IncreasedAmount = -20;
-        //else _attackBehaviour.IncreasedAmount = 0;
-
-        //if (BlackBoard.GuardBlinded) _blindedBehaviour.IncreasedAmount = -20;
-        //else _blindedBehaviour.IncreasedAmount = 0;
-
-        _behaviours = _behaviours.ToList().OrderByDescending(x => x.GetNormalizedScore()).ToArray();
-        AIBehaviour newBehaviour = _behaviours.First();
-
-        if (newBehaviour != _currentBehaviour)
+        if (BlackBoard.GuardBlinded)
 		{
+            newBehaviour = GetComponent<BlindedBehaviour>();
+            Debug.Log(newBehaviour.GetType().Name);
             _currentBehaviour?.OnExit();
             _currentBehaviour = newBehaviour;
             _currentBehaviour.OnEnter();
-            //_currentBehaviour.IncreasedAmount += 5;
+        }
+        else if (newBehaviour != _currentBehaviour)
+		{
+            Debug.Log(newBehaviour.GetType().Name);
+            _currentBehaviour?.OnExit();
+            _currentBehaviour = newBehaviour;
+            _currentBehaviour.OnEnter();
 		}
-        Debug.Log(newBehaviour.GetType().Name);
-
-    }
+	}
 
     public void OnUpdate()
     {
@@ -57,11 +52,5 @@ public class AISelector : MonoBehaviour
             EvaluateBehaviours();
             yield return new WaitForSeconds(3f);
 		}
-    }
-
-    private IEnumerator KeepBehaviourLonger(AIBehaviour behaviour)
-    {
-        //behaviour.IncreasedAmount -= Time.deltaTime;
-        yield return null;
     }
 }

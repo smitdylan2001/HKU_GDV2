@@ -3,8 +3,7 @@ using UnityEngine;
 
 public abstract class AIBehaviour : MonoBehaviour
 {
-    [SerializeField] public UtilityEvaluator[] utilities;
-    //public float IncreasedAmount;
+    [SerializeField] public UtilityEvaluator[] utilities; 
      
     public void OnInitialize(BlackBoard bb)
     {
@@ -16,7 +15,7 @@ public abstract class AIBehaviour : MonoBehaviour
 
     public float GetNormalizedScore()
     {
-        return Mathf.Clamp01(utilities.ToList().Sum(x => (x.GetNormalizedScore())) / utilities.Length);
+        return Mathf.Clamp01(utilities.ToList().Sum(x => x.GetNormalizedScore()) / utilities.Length);
     }
 
     public virtual void OnEnter() { }

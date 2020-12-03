@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoReset: 1
   Type: 1
-  value: 0
+  value: 15
   minValue: 0
-  maxValue: 10
+  maxValue: 15
