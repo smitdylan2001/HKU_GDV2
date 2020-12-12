@@ -7,6 +7,7 @@ public abstract class BaseScriptableObject : ScriptableObject
 {
     [SerializeField] private bool _autoReset = true;
 #if UNITY_EDITOR
+
     public BaseScriptableObject()
     {
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
@@ -18,6 +19,7 @@ public abstract class BaseScriptableObject : ScriptableObject
             //AssetDatabase.SaveAssets();
             OnReset();
         }
+
         if (state == PlayModeStateChange.EnteredEditMode && _autoReset)
         {
             //Resources.UnloadAsset(this);

@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 public class BTSequence : BTBaseNode
 {
-	private BTBaseNode[] nodes;
+	private BTBaseNode[] _nodes;
 
 	public BTSequence(params BTBaseNode[] inputNodes)
 	{
-		nodes = inputNodes;
+		_nodes = inputNodes;
 	}
 
 	public override TaskStatus Run()
 	{
-		foreach (BTBaseNode node in nodes)
+		foreach (BTBaseNode node in _nodes)
 		{
 			TaskStatus result = node.Run();
 			if (node.GetType().Name != "BTSequence" && node.GetType().Name != "BTInvert") EventManager<string>.InvokeEvent(EventType.OnRogueTextUpdate, node.GetType().Name);

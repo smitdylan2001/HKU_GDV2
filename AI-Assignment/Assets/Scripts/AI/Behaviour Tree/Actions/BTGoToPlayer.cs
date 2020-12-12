@@ -20,6 +20,7 @@ public class BTGoToPlayer : BTBaseNode
 	{
 		_agent.speed = _walkSpeed.Value;
 		_agent.SetDestination(_player.transform.position);
+
 		if (_agent.remainingDistance > _agent.stoppingDistance)
 		{
 			return TaskStatus.Running;

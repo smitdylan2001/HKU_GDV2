@@ -58,7 +58,9 @@ public class AttackBehaviour : AIBehaviour
 	private IEnumerator RegenerateAttack()
 	{
 		yield return new WaitForSeconds(2f);
+
 		_hasAttacked = false;
+
 		yield return null;
 	}
 }

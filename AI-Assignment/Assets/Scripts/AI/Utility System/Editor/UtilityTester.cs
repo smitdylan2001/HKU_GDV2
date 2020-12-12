@@ -6,10 +6,11 @@ using System;
 
 public class UtilityTester : EditorWindow
 {
-    private GameObject agent;
-    private List<FloatValue> variables = new List<FloatValue>();
+    private GameObject _agent;
+    private List<FloatValue> _variables = new List<FloatValue>();
 
-    private List<bool> toggleGroups = new List<bool>();
+    private List<bool> _toggleGroups = new List<bool>();
+
     // Add menu named "My Window" to the Window menu
     [MenuItem("Window/UtilityTester")]
     static void Init() 
@@ -19,10 +20,7 @@ public class UtilityTester : EditorWindow
         window.Show();
     }
 
-    private void OnEnable()
-    {
-        
-    }
+    private void OnEnable() { }
 
     void Update()
     {
@@ -34,12 +32,12 @@ public class UtilityTester : EditorWindow
 
     void OnGUI()
     {
-        agent = EditorGUILayout.ObjectField("Agent", agent, typeof(UnityEngine.GameObject), true) as GameObject;
-        if(agent == null) { return; }
+        _agent = EditorGUILayout.ObjectField("Agent", _agent, typeof(UnityEngine.GameObject), true) as GameObject;
+        if(_agent == null) { return; }
 
-        agent.GetComponent<Guard>().OnInitialize();
+        _agent.GetComponent<Guard>().OnInitialize();
         
-        var aiBehaviours = agent.GetComponents<AIBehaviour>();
+        var aiBehaviours = _agent.GetComponents<AIBehaviour>();
 
         EditorGUILayout.LabelField("Behaviours", EditorStyles.boldLabel);
         EditorGUI.indentLevel = 2;
@@ -73,11 +71,11 @@ public class UtilityTester : EditorWindow
         EditorGUILayout.LabelField("Variables", EditorStyles.boldLabel);
         EditorGUI.indentLevel = 2;
 
-        var bb = agent.GetComponent<BlackBoard>();
-        variables = bb.FloatVariables;
-        if (variables != null)
+        var bb = _agent.GetComponent<BlackBoard>();
+        _variables = bb.FloatVariables;
+        if (_variables != null)
         {
-            foreach (var kv in variables)
+            foreach (var kv in _variables)
             {
                 kv.Value = EditorGUILayout.Slider(kv.name, kv.Value, kv.MinValue, kv.MaxValue);
             }

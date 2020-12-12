@@ -21,6 +21,7 @@ public class RetreatBehaviour : AIBehaviour
 		_agent.speed = 4;
 		_hidingSpots = _hidingSpots.OrderBy(x => (x.position).sqrMagnitude).ToArray();
 		_agent.SetDestination(_hidingSpots.Last().position);
+
 		if (_agent.remainingDistance <= 1) _health.Value += Time.deltaTime*2;
 	}
 }

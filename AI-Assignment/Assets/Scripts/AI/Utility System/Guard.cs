@@ -33,9 +33,11 @@ public class Guard : MonoBehaviour, IDamageable
     void Start()
     {
         OnInitialize();
-        BlackBoard.GuardBlinded = false;
+
         _agent.stoppingDistance = 0.5f;
         _infoText = _infoTextObject.GetComponent<TextMesh>();
+
+        BlackBoard.GuardBlinded = false;
         EventManager<string>.AddListener(EventType.OnGuardTextUpdate, UpdateText);
     }
 
@@ -43,6 +45,7 @@ public class Guard : MonoBehaviour, IDamageable
     {
         AISelector = GetComponent<AISelector>();
         BlackBoard = GetComponent<BlackBoard>();
+
         BlackBoard.OnInitialize();
         AISelector.OnInitialize(BlackBoard);
     }
@@ -54,6 +57,7 @@ public class Guard : MonoBehaviour, IDamageable
         {
             TakeDamage(null, 5);
         }
+
         var distance = BlackBoard.GetFloatVariableValue(VariableType.Distance);
         distance.Value = Vector3.Distance(transform.position, _playerReference.transform.position);
 
@@ -82,9 +86,11 @@ public class Guard : MonoBehaviour, IDamageable
             {
                 Transform target = c.transform;
                 Vector3 direction = (target.position - transform.position).normalized;
+
                 if (Vector3.Angle(transform.forward, direction) < _sightDegree.Value / 2)
                 {
                     float distance = Vector3.Distance(transform.position, target.position);
+
                     if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
                     {
                         if (c.name == "Player")
@@ -96,6 +102,7 @@ public class Guard : MonoBehaviour, IDamageable
                     }
                 }
             }
+
             if (Vector3.Distance(transform.position, _playerReference.transform.position) < 0.5) 
 			{
                 BlackBoard.PlayerSeen = true;

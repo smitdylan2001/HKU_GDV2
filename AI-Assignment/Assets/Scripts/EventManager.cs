@@ -32,6 +32,7 @@ public static class EventManager
 		}
 		EVENT_DICTIONAIRY[type] += function;
 	}
+
 	/// <summary>
 	/// Removes a listener
 	/// </summary>

@@ -2578,10 +2578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daecdc9191b1aa94482594ea20f7e663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotXSpeed: 60
-  rotYSpeed: 60
-  followTarget: {fileID: 1267729045}
-  smoothFollowFactor: 3
+  _rotXSpeed: 50
+  _rotYSpeed: 50
+  _followTarget: {fileID: 1267729045}
+  _smoothFollowFactor: 4
 --- !u!4 &1696898269
 Transform:
   m_ObjectHideFlags: 0

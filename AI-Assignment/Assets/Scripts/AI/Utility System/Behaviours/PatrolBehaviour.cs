@@ -19,11 +19,13 @@ public class PatrolBehaviour : AIBehaviour
 	public override void Execute()
     {
 		_agent.speed = 1;
+
         if (_agent.remainingDistance <= 1f)
 		{
 			GoToNextSpot(_patrolPath[_currentSpot]);
 			_currentSpot = (_currentSpot + 1) % 6;
 		}
+
 		_health.Value += Time.deltaTime / 10;
 	}
 

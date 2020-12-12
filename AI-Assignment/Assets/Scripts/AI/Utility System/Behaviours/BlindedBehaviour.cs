@@ -23,7 +23,9 @@ public class BlindedBehaviour : AIBehaviour
     {
 		BlackBoard.PlayerSeen = false;
 		_agent.speed = 0.5f;
+
 		StartCoroutine(Hide());
+
 		if (_agent.remainingDistance <= _agent.stoppingDistance)
 		{
 			BlackBoard.GuardBlinded = false;
@@ -35,6 +37,7 @@ public class BlindedBehaviour : AIBehaviour
 	public IEnumerator Hide()
 	{
 		yield return new WaitForSeconds(3f);
+
 		if (!_hasSelectedLocation)
 		{
 			_agent.SetDestination(_hidingSpots[Random.Range(0, _hidingSpots.Length)].position);

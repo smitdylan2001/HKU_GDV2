@@ -5,8 +5,8 @@ public class FloatValue : BaseScriptableObject
 {
     public VariableType Type;
 
-    [SerializeField] private float value;
-    public float Value { get => value; set => this.value = value; }
+    [SerializeField] private float _value;
+    public float Value { get => _value; set => this._value = value; }
 
     [SerializeField] private float minValue = 0;
     public float MinValue { get { return minValue; } }
@@ -16,7 +16,7 @@ public class FloatValue : BaseScriptableObject
 
     public override void OnReset()
     {
-        value = maxValue;
+        _value = maxValue;
     }
 
 }

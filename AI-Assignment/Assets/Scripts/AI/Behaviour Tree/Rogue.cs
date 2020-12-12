@@ -37,14 +37,6 @@ public class Rogue : MonoBehaviour
 	private void Start()
 	{
 		_agent.stoppingDistance = 1f;
-		//TODO: Create your Behaviour tree here
-
-		_followBehaviour =
-			new BTSequence(
-					new BTInvert(new BTIsTargetClose(this.gameObject, _playerReference)),
-					new BTGoToPlayer(_walkSpeed, _playerReference, _agent, this.gameObject),
-					new BTWait(3f)
-				);
 
 		_rescueBehaviour =
 			new BTSequence(
@@ -52,6 +44,13 @@ public class Rogue : MonoBehaviour
 					new BTHide(_runSpeed, _hidingSpots, _agent, this.gameObject),
 					new BTWait(1f),
 					new BTThrowSmoke(_smoke, _enemyReference)
+				);
+
+		_followBehaviour =
+			new BTSequence(
+					new BTInvert(new BTIsTargetClose(this.gameObject, _playerReference)),
+					new BTGoToPlayer(_walkSpeed, _playerReference, _agent, this.gameObject),
+					new BTWait(3f)
 				 );
 
 		_tree =
@@ -66,7 +65,9 @@ public class Rogue : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_tree?.Run();
+
 		EventManager<string>.InvokeEvent(EventType.OnRogueTextUpdate, _currentBehaviour);
+
 		_infoTextObject.transform.LookAt(Camera.main.transform);
 	}
 

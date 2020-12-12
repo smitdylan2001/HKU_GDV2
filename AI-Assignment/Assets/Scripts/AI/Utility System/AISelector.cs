@@ -16,6 +16,7 @@ public class AISelector : MonoBehaviour
         _attackBehaviour = GetComponent<AttackBehaviour>();
         _blindedBehaviour = GetComponent<BlindedBehaviour>();
         _currentBehaviour = GetComponent<PatrolBehaviour>();   //This is to avoid a null reference error when there is no behavior assigned and KeepBehaviourLonger runs
+
         foreach (AIBehaviour bhv in _behaviours)
 		{
             bhv.OnInitialize(bb);
@@ -41,6 +42,7 @@ public class AISelector : MonoBehaviour
             _currentBehaviour.OnEnter();
             _currentBehaviour.IncreasedAmount += .5f;
 		}
+
         EventManager<string>.InvokeEvent(EventType.OnGuardTextUpdate, _currentBehaviour.GetType().Name);
     }
 

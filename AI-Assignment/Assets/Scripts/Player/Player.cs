@@ -6,6 +6,7 @@ using UnityEngine.Assertions.Must;
 public class Player : MonoBehaviour, IDamageable
 {
     public Transform Camera;
+
     [SerializeField] private float _rotationSpeed = 180f;
     [SerializeField] private float _moveSpeed = 3;
     [SerializeField] private float _deathForce = 1000;
@@ -13,10 +14,10 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Guard _guardData;
     [SerializeField] private GameObject _infoTextObject;
     [SerializeField] private float _health;
-    private float Health
+    public float Health
     {
         get{ return _health; }
-        set {
+        private set {
             if (value > 100){ _health = 100; }
             if (value < 0) { _health = 0; }
         }
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour, IDamageable
         _mainCollider = GetComponent<Collider>();
         _guardData = GameObject.Find("AI_Guard").GetComponent<Guard>();
         _infoText = _infoTextObject.GetComponent<TextMesh>();
+
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rib in rigidBodies)
         {
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour, IDamageable
             if (col.isTrigger) { continue; }
             col.enabled = false;
         }
+
         _mainCollider.enabled = true;
         _rb.isKinematic = false;
     }
@@ -58,8 +61,10 @@ public class Player : MonoBehaviour, IDamageable
     {
         _vert = Input.GetAxis("Vertical");
         _hor = Input.GetAxis("Horizontal");
+
         Vector3 forwardDirection = Vector3.Scale(new Vector3(1, 0, 1), Camera.transform.forward);
         Vector3 rightDirection = Vector3.Cross(Vector3.up, forwardDirection.normalized);
+
         _moveDirection = forwardDirection.normalized * _vert + rightDirection.normalized * _hor;
         if (_moveDirection != Vector3.zero)
         {
@@ -83,6 +88,10 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(GameObject attacker, int damage)
 	{
+		Health -= damage;
+        BlackBoard.HasBeenAttacked = true;
+
+        //RAGDOLL CODE
 		//_animator.enabled = false;
 		//var cols = GetComponentsInChildren<Collider>();
 		//foreach (Collider col in cols)
@@ -100,9 +109,6 @@ public class Player : MonoBehaviour, IDamageable
 		//}
 		//_ragdoll.transform.SetParent(null);
 		//gameObject.SetActive(false);
-
-		Health -= damage;
-        BlackBoard.HasBeenAttacked = true;
     }
 
     private void GetComponentsRecursively<T>(GameObject obj, ref List<T> components)
@@ -112,6 +118,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             components.Add(component);
         }
+
         foreach(Transform t in obj.transform)
         {
             if(t.gameObject == obj) { continue; }

@@ -6,6 +6,7 @@ public class VariableFloat : BaseScriptableObject
     //Old value, New value
     public System.Action<float, float> OnValueChanged;
     [SerializeField] private float _value;
+
     public float Value
     {
         get { return _value; }

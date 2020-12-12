@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class BTCheckPlayerAttacked : BTBaseNode
 {
-	public BTCheckPlayerAttacked()
-	{
-
-	}
+	public BTCheckPlayerAttacked() { }
 
 	public override TaskStatus Run()
 	{

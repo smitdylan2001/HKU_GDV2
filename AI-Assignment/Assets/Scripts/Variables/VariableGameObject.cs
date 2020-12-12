@@ -5,14 +5,15 @@ public class VariableGameObject : BaseScriptableObject
 {
     //Old value, New value
     public System.Action<GameObject, GameObject> OnValueChanged;
-    [SerializeField] private GameObject value;
+    [SerializeField] private GameObject _value;
+
     public GameObject Value
     {
-        get { return value; }
+        get { return _value; }
         set
         {
-            OnValueChanged?.Invoke(this.value, value); 
-            this.value = value;
+            OnValueChanged?.Invoke(this._value, value); 
+            this._value = value;
         }
     }
 
